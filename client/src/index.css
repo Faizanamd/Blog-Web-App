@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(220 252 231);
+}
+
+.pageHeight {
+    min-height: calc(100vh - 64px);
+}
+
+.limit-4-lines {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.limit-1-lines {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.limit-3-lines {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* Hear styel */
+.heart {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+}
+
+.heart span {
+    width: 15px;
+    height: 20px;
+    /* background-color: red; */
+    border: 1px solid red;
+    border-top: 2px solid red;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+
+}
+
+.heart span:nth-child(1) {
+    border-right: 0px;
+    transform: rotate(-45deg) translateX(8px);
+}
+
+.heart span:nth-child(2) {
+    border-left: 0px;
+    transform: rotate(45deg) translateX(-8px);
+}
