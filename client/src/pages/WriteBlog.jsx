@@ -1,11 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AuthContext from '../Context/Auth.Context';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 function WriteBlog() {
 
     const { isAuth } = useContext(AuthContext);
+    useEffect(() => {
+        if (!isAuth) {
+            navigate("/login")
+        }
+
+    }, [])
+    const { id } = useParams();
     const navigate = useNavigate();
+    const [image, setImages] = useState();
+    const [title, setTitle] = useState("");
     const [content, setContent] = useState([
         { type: '', value: '' }
     ]);
@@ -18,46 +29,60 @@ function WriteBlog() {
         setContent([...content, { type: 'heading', value: '' }]);
     };
 
-    const addImage = () => {
-        setContent([...content, { type: 'image', value: '' }]);
-    };
+
 
     const handleContentChange = (index, event) => {
         const updatedContent = [...content];
         updatedContent[index].value = event.target.value;
         setContent(updatedContent);
     };
-    useEffect(() => {
-        // if (!isAuth) {
 
-        //     navigate("/login")
-        // }
-        // else {
-        //     navigate("/writeblog")
-        // }
-    }, [])
-    const createFormData = () => {
-        const newFormData = new FormData();
-        content.forEach((item, index) => {
-            newFormData.append(`content_${index}`, JSON.stringify(item));
-        });
-        // setFormData(newFormData);
-    };
+
     const publishBlog = async (e) => {
-       const result= await createFormData();
-        // Here you can send formData to your backend or do whatever you need to do with it
-        console.log(result);
+        const formData = new FormData();
+        formData.append('image', image);
+        // Convert the content array to a JSON string
+        formData.append('content', JSON.stringify(content));
+        formData.append("userId", id);
+        formData.append("title", title);
+
+        try {
+            const result = await axios.post("http://localhost:8000/api/post/newpost", formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            console.log(result.data);
+            if (result.data.status) {
+                toast.success(result.data.message);
+                navigate("/")
+                setContent([]);
+                setImages();
+            } else {
+                toast.error(result.data.message);
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
     };
+
+
     return (
         <div className='lg:w-[75%] md:w-[85%] w-[98%]  pt-36  mx-auto  '>
             <div className='w-full bg-emerald-200    lg:px-8 md:px-6 px-2 py-6 rounded-lg flex md:flex-row flex-col items-start justify-between '>
                 <div className="flex md:flex-col sm:full md:space-y-4  md:space-x-0 space-x-4  w-16 items-center mb-4">
                     <button onClick={addHeading} className="w-full bg-blue-500 text-white px-1 py-2 rounded-md hover:bg-blue-600">&lt;h1&gt;</button>
                     <button onClick={addParagraph} className="w-full bg-blue-500 text-white px-1 py-2 rounded-md hover:bg-blue-600"> &lt;p&gt; </button>
-                    <button onClick={addImage} className="w-full bg-blue-500 text-white px-1 py-2 rounded-md hover:bg-blue-600">&lt;img&gt;</button>
                 </div>
                 <div className='md:w-[85%]  w-[100%] '>
-                    <input type="text" placeholder="Title" className="w-full bg-gray-100 rounded-md p-2 mb-4 outline-none" />
+                    <input
+                        type="text"
+                        placeholder="Title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        className="w-full bg-gray-100 rounded-md p-2 mb-4 outline-none"
+                    />
+                    <input type="file" onChange={(e) => setImages(e.target.files[0])} />
 
                     {content.map((item, index) => (
                         <div key={index} className="mb-4">
@@ -80,14 +105,7 @@ function WriteBlog() {
                                 />
                             )}
 
-                            {item.type === 'image' && (
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    multiple
-                                    className="mb-2 outline-none"
-                                />
-                            )}
+
                         </div>
                     ))}
                     <div className="w-full mt-4">
@@ -101,57 +119,3 @@ function WriteBlog() {
 
 export default WriteBlog;
 
-
-/* 
-
-   <div className="max-w-4xl mx-auto bg-emerald-200 shadow-xl rounded-md  p-6  top-20 left-[30%] ">
-                <div className='flex '>
-
-                    <div className="flex flex-col  w-6 items-start mb-4">
-                        <button onClick={addParagraph} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"> &lt;p&gt; </button>
-                        <button onClick={addHeading} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">&lt;h1&gt;</button>
-                        <button onClick={addImage} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">&lt;img&gt;</button>
-                    </div>
-                    <div>
-                        <input type="text" placeholder="Title" className="w-full bg-gray-100 rounded-md p-2 mb-4" />
-
-                        {content.map((item, index) => (
-                            <div key={index} className="mb-4">
-                                {item.type === 'paragraph' && (
-                                    <textarea
-                                        placeholder="Write your paragraph here..."
-                                        className="w-full h-24 bg-gray-100 rounded-md p-2 mb-2"
-                                        value={item.value}
-                                        onChange={(event) => handleContentChange(index, event)}
-                                    />
-                                )}
-
-                                {item.type === 'heading' && (
-                                    <input
-                                        type="text"
-                                        placeholder="Enter your heading"
-                                        className="w-full bg-gray-100 rounded-md p-2 mb-2"
-                                        value={item.value}
-                                        onChange={(event) => handleContentChange(index, event)}
-                                    />
-                                )}
-
-                                {item.type === 'image' && (
-                                    <input
-                                        type="file"
-                                        accept="image/*"
-                                        multiple
-                                        className="mb-2"
-                                    />
-                                )}
-                            </div>
-                        ))}
-                    </div>
-
-                </div>
-                <div className="mt-4">
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Publish</button>
-                </div>
-            </div>
-
-*/

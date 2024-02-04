@@ -66,7 +66,7 @@ function Register() {
 
                     <button className='bg-emerald-400 w-[95%]  py-2 rounded-xl text-xl font-bold'>Register</button>
                 </form>
-                <span>Already register? <Link to={'/login'} className='text-xl font-bold'>Login</Link></span>
+                <span>Don't have an account? <Link to={'/login'} className='text-xl font-bold'>Login</Link></span>
             </div>
         </div>
     )

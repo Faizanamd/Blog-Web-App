@@ -11,14 +11,16 @@ import AuthContext from './Context/Auth.Context';
 function App() {
   const [isAuth, setIsAuth] = useState(false);
   const [userData, setUserData] = useState([]);
+  const [userId, setUserId] = useState("");
+  const [refresh, setRefresh] = useState(0);
   const router = createBrowserRouter([
     {
       path: "/", element: <Navbar />, children: [
         { index: true, element: <Home /> },
-        { path: "post/4050", element: <PostContent /> },
+        { path: "post/:postId", element: <PostContent /> },
         { path: 'login', element: <Login /> },
         { path: "register", element: <Register /> },
-        { path: "writeblog", element: <WriteBlog /> }
+        { path: `writeblog/:userId`, element: <WriteBlog /> }
       ]
     },
 
@@ -26,7 +28,7 @@ function App() {
 
   ])
   return (
-    <AuthContext.Provider value={{ isAuth, setIsAuth, userData, setUserData }}>
+    <AuthContext.Provider value={{ isAuth, setIsAuth, userData, setUserData, userId, setUserId , refresh, setRefresh}}>
       <RouterProvider router={router} >
 
       </RouterProvider>

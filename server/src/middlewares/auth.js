@@ -51,7 +51,7 @@ export const refreshToken = async (req, res, next) => {
             }
             res.clearCookie(String(user.id)) // clearing prev token
             const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, {
-                expiresIn: "200s"
+                expiresIn: "60s"
             });
             res.cookie(String(user.id), token, {
                 path: '/',
