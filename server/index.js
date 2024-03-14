@@ -5,12 +5,11 @@ import postRouter from './src/features/posts/post.routes.js';
 import likeRouter from './src/features/likes/like.router.js';
 const app = express();
 app.use(express.static('public'))
-
 app.use(cors({
-    origin: "https://blog-web-app-6k4j.onrender.com",
+    origin: "http://localhost:5173",
     credentials: true,
-}));
-
+}
+));
 app.use(express.json());
 // Different routes
 app.get("/", (req, res) => {
