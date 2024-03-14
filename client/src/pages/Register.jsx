@@ -27,7 +27,7 @@ function Register() {
         formData.append('password', password);
 
         try {
-            const result = await axios.post("https://blog-web-app-backend-nu.vercel.app/api/user/register", formData, {
+            const result = await axios.post("https://blog-web-app-backend-ibh1acrfw-faizan-ahmads-projects-1250996e.vercel.app/api/user/register", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

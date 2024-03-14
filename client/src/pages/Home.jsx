@@ -23,7 +23,7 @@ function Home() {
 
     const fetPosts = async () => {
         try {
-            const result = await axios.get("https://blog-web-app-backend-nu.vercel.app/api/post/getAllPost");
+            const result = await axios.get("https://blog-web-app-backend-ibh1acrfw-faizan-ahmads-projects-1250996e.vercel.app/api/post/getAllPost");
             setPosts(result.data.posts);
             console.log("res", result.data.posts[0].content.type = "title");  // Log the result.data.posts here
         } catch (error) {
