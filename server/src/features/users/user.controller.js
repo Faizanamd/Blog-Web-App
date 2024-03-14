@@ -16,6 +16,7 @@ export const registerController = async (req, res) => {
         }
     } catch (error) {
         console.log("error in register controller: ", error.message);
+        return res.send({ "status": false, 'message': err.message});
     }
 }
 
@@ -43,6 +44,7 @@ export const loginController = async (req, res) => {
         return res.send({ "status": true, 'message': "log in successfull" });
     } catch (error) {
         console.log(error.message);
+        return res.send({ "status": false, 'message': err.message});
     }
 }
 
@@ -71,6 +73,7 @@ export const getUser = async (req, res) => {
         //     result: false,
         //     message: "Error getting user"
         // });
+        return res.send({ "status": false, 'message': err.message});
     }
 }
 
@@ -94,6 +97,7 @@ export const deleteToken = async (req, res) => {
             result: false,
             message: "Error deleting token"
         });
+        return res.send({ "status": false, 'message': err.message});
     }
 }
 

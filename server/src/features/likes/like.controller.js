@@ -12,6 +12,7 @@ export const likePost = async (req, res) => {
         return res.send(result);
     } catch (err) {
         console.log(err.message);
+        return res.send({ "status": false, 'message': err.message});
     }
 }
 
@@ -27,6 +28,6 @@ export const getPostLikeByPostIdUserId = async (req, res) => {
         return res.send({ "status": true, 'message': "Likes", result })
     } catch (error) {
         console.log(error.message);
-
+        return res.send({ "status": false, 'message': err.message});
     }
 }

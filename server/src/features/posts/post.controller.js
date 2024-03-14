@@ -11,6 +11,7 @@ export const newPostController = async (req, res) => {
         return res.send({ "status": true, 'message': "Blog Posted Successfully" });
     } catch (err) {
         console.log(err.message);
+        return res.send({ "status": false, 'message': err.message});
     }
 }
 export const getAllPostController = async (req, res) => {
@@ -22,6 +23,7 @@ export const getAllPostController = async (req, res) => {
         return res.send({ "status": true, 'message': "Posts!", posts: result })
     } catch (err) {
         console.log(err.message);
+        return res.send({ "status": false, 'message': err.message});
     }
 }
 
@@ -37,6 +39,7 @@ export const getPostById = async (req, res) => {
 
     } catch (err) {
         console.log(err.message);
+        return res.send({ "status": false, 'message': err.message});
     }
 }
 
