@@ -47,7 +47,7 @@ function WriteBlog() {
         formData.append("title", title);
 
         try {
-            const result = await axios.post("http://localhost:8000/api/post/newpost", formData, {
+            const result = await axios.post("https://blog-web-app-6k4j.onrender.com/api/post/newpost", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

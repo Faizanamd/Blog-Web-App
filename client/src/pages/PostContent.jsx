@@ -16,7 +16,7 @@ function PostContent() {
 
 
     const fetPost = async () => {
-        const result = await axios.get(`http://localhost:8000/api/post/getPostById/${postId}`)
+        const result = await axios.get(`https://blog-web-app-6k4j.onrender.com/api/post/getPostById/${postId}`)
         if (!result.data.status) {
             toast.error(result.data.message);
         }
@@ -56,7 +56,7 @@ function PostContent() {
                             <div className='pr-2 items-center'>views: <span>{postData.views}</span></div>
                         </div>
                         <div className='w-full flex justify-center my-6'>
-                            <img className='w-[85%] rounded-md opacity-90 hover:scale-x-110 transition duration-700 aspect-video' src={`http://localhost:8000/uploads/${postData.image}`} alt="" />
+                            <img className='w-[85%] rounded-md opacity-90 hover:scale-x-110 transition duration-700 aspect-video' src={`https://blog-web-app-6k4j.onrender.com/uploads/${postData.image}`} alt="" />
                         </div>
                         {postData.content && JSON.parse(postData.content).map((item, index) => {
                             switch (item.type) {

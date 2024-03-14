@@ -27,7 +27,7 @@ function Register() {
         formData.append('password', password);
 
         try {
-            const result = await axios.post("http://localhost:8000/api/user/register", formData, {
+            const result = await axios.post("https://blog-web-app-6k4j.onrender.com/api/user/register", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
