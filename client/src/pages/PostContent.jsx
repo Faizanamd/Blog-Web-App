@@ -16,7 +16,7 @@ function PostContent() {
 
 
     const fetPost = async () => {
-        const result = await axios.get(`https://blog-web-app-6k4j.onrender.com/api/post/getPostById/${postId}`)
+        const result = await axios.get(`https://blog-web-app-backend-nu.vercel.app/api/post/getPostById/${postId}`)
         if (!result.data.status) {
             toast.error(result.data.message);
         }

@@ -6,7 +6,7 @@ import likeRouter from './src/features/likes/like.router.js';
 const app = express();
 app.use(express.static('public'))
 app.use(cors({
-    origin: "https://blog-web-app-lemon.vercel.app/",
+    origin: "https://blog-web-app-lemon.vercel.app",
     credentials: true,
 }
 ));

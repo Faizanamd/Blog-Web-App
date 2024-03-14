@@ -22,7 +22,7 @@ function App() {
 
   const verifyToken = async () => {
     try {
-      const result = await axios.get("https://blog-web-app-6k4j.onrender.com/api/user/verifyToken", {
+      const result = await axios.get("https://blog-web-app-backend-nu.vercel.app/api/user/verifyToken", {
         withCredentials: true
       })
       console.log("verify", result.data)
@@ -43,7 +43,7 @@ function App() {
   }
   const refreshToken = async () => {
     try {
-      const result = await axios.get("https://blog-web-app-6k4j.onrender.com/api/user/refreshToken", {
+      const result = await axios.get("https://blog-web-app-backend-nu.vercel.app/api/user/refreshToken", {
         withCredentials: true
       })
       console.log("result", result.data)
@@ -62,7 +62,7 @@ function App() {
   }
   const fetchUserLikes = async () => {
     try {
-      const result = await axios.get(`https://blog-web-app-6k4j.onrender.com/api/like/getLikePostByPostIdUserId/${postId}`)
+      const result = await axios.get(`https://blog-web-app-backend-nu.vercel.app/api/like/getLikePostByPostIdUserId/${postId}`)
       if (result.data.status) {
         setLikeList(result.data.result);
         if (isAuth) {
@@ -99,7 +99,7 @@ function App() {
   async function handleDelete(e) {
     e.preventDefault();
     try {
-      const result = await axios.get("https://blog-web-app-6k4j.onrender.com/api/user/deleteToken", {
+      const result = await axios.get("https://blog-web-app-backend-nu.vercel.app/api/user/deleteToken", {
         withCredentials: true
       })
       console.log(result.data);

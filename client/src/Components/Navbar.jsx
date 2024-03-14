@@ -41,7 +41,7 @@ function Navbar() {
                     ) : (<Link to={'/login'} className='text-lg  font-semibold bg-white px-3 py-1 rounded-lg hover:text-black hover:bg-emerald-300 transition duration-500 ease-in-out hover:cursor-pointer'>Login</Link>
                     )}
 
-                    {isAuth ? <img onClick={(e) => setMenuOpen(!menuOpen)} src={`https://blog-web-app-6k4j.onrender.com//uploads/${userData.image}`} className='bg-red-400 w-9 h-9 rounded-full' /> : ""}
+                    {isAuth ? <img onClick={(e) => setMenuOpen(!menuOpen)} src={`https://blog-web-app-backend-nu.vercel.app/uploads/${userData.image}`} className='bg-red-400 w-9 h-9 rounded-full' /> : ""}
 
                 </div>
 
