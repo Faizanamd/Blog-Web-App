@@ -1,88 +1,13 @@
-import React, { useContext, useDebugValue, useEffect } from 'react'
-import { Outlet } from 'react-router-dom'
+import React, { useContext, useDebugValue, useEffect, useState } from 'react'
+import { Outlet, useSearchParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast'
 import AuthContext from '../Context/Auth.Context.js'
 import axios from 'axios'
-import Footer from './Footer.jsx'
 axios.defaults.withCredentials = true;
 function Navbar() {
-    const { isAuth, setIsAuth, userData, setUserData, userId, setUserId } = useContext(AuthContext);
-    const verifyToken = async () => {
-        try {
-            const result = await axios.get("http://localhost:8000/api/user/verifyToken", {
-                withCredentials: true
-            })
-            console.log("verify", result.data)
-            setUserData(result.data.user);
-            setUserId(result.data.user._id);
-            console.log("verify", result.data);
-            if (!result.data.result) {
-                toast.error(result.data.message);
-            }
-            setIsAuth(true);
-
-        } catch (error) {
-            console.log(error.message);
-            setIsAuth(false);
-            toast.error("No active session");
-
-        }
-    }
-    const refreshToken = async () => {
-        try {
-            const result = await axios.get("http://localhost:8000/api/user/refreshToken", {
-                withCredentials: true
-            })
-            console.log("result", result.data)
-            setUserData(result.data.user);
-            setUserId(result.data.user._id);
-            if (result.data.result) {
-                setUserData(result.data.user)
-            }
-            setIsAuth(true)
-            console.log("refresh", result.data);
-        } catch (error) {
-            console.log(error.message);
-
-        }
-        console.log(userData);
-    }
-
-    useEffect(() => {
-        console.log("Effect triggered");
-        if (!isAuth) {
-            console.log("Refreshing token...");
-            verifyToken();
-            refreshToken();
-        }
-
-        const intervalId = setInterval(() => {
-            console.log("Refreshing token...");
-            refreshToken();
-        }, 25 * 1000);
-
-        return () => clearInterval(intervalId);
-    }, [isAuth, setIsAuth]);
-
-
-    async function handleDelete(e) {
-        e.preventDefault();
-        try {
-            const result = await axios.get("http://localhost:8000/api/user/deleteToken", {
-                withCredentials: true
-            })
-            console.log(result.data);
-            if (result.data.result) {
-                setIsAuth(false);
-                toast.success("your are logout successfully")
-            }
-        }
-        catch (error) {
-            console.log(error.message);
-        }
-
-    }
+    const { isAuth, setIsAuth, userData, setUserData, userId, setUserId, handleDelete } = useContext(AuthContext);
+    const [menuOpen, setMenuOpen] = useState(false);
     return (
         <>
             <Toaster
@@ -93,25 +18,36 @@ function Navbar() {
 
                 <Link to={'/'} className='md:ml-16 sm:ml-6 ml-2 md:text-3xl text-xl text-semibold'>FZN Blog Platform</Link>
                 <div className='flex items-center space-x-2 md:mr-16 sm:mr-6 mr-2 '>
-                   
 
-                        <Link to={isAuth ? `/writeblog/${userId}` : '/login'}
-                            className={`text-lg font-semibold bg-white px-3 py-1 rounded-lg hover:text-black hover:bg-emerald-300 transition duration-500 ease-in-out hover:cursor-pointer sm:inline-block hidden`}>Write Blog</Link>
-                        {isAuth ? (
-                            <>
-                                <button onClick={(e) => handleDelete(e)} className=' md:text-lg text-md font-semibold bg-white md:px-3 px-1 py-1 rounded-lg hover:text-black hover:bg-emerald-300 transition duration-500 ease-in-out hover:cursor-pointer sm:inline-block hidden  ' >Logout</button>
-                            </>
 
-                        ) : (<Link to={'/login'} className='text-lg  font-semibold bg-white px-3 py-1 rounded-lg hover:text-black hover:bg-emerald-300 transition duration-500 ease-in-out hover:cursor-pointer'>Login</Link>
-                        )}
-                
-                    {isAuth ? <img src={`http://localhost:8000/uploads/${userData.image}`} className='bg-red-400 w-9 h-9 rounded-full' /> : ""}
+                    <Link to={isAuth ? `/writeblog/${userId}` : '/login'}
+                        className={`text-lg font-semibold bg-white px-3 py-1 rounded-lg hover:text-black hover:bg-emerald-300 transition duration-500 ease-in-out hover:cursor-pointer sm:inline-block hidden`}>Write Blog</Link>
+                    {isAuth ? (
+                        <div className='relative'>
+                            <button onClick={(e) => { handleDelete(e) }} className='md:text-lg text-md font-semibold bg-white md:px-3 px-1 py-1 rounded-lg hover:text-black hover:bg-emerald-300 transition duration-500 ease-in-out hover:cursor-pointer sm:inline-block hidden'>
+                                Logout
+                            </button>
+
+                            <div className={`w-[160px] h-fit bg-emerald-200 absolute sm:top-12 top-8 -right-12   ${menuOpen ? "flex" : "hidden"}   flex-col items-start    list-none`}>
+                                <Link to={`/dashboard/${userId}`} className={` w-full border-b-2 border-white pl-2 py-2 font-bold`}>Your Dashboard</Link>
+                                <Link to={isAuth ? `/writeblog/${userId}` : '/login'}
+                                    className={` sm:hidden w-full border-b-2 border-white pl-2 py-2 font-bold`}>Write Blog</Link>
+                                <button onClick={(e) => { handleDelete(e) }} className={` sm:hidden w-full border-b-2 border-white pl-2 py-2 font-bold`}>
+                                    Logout
+                                </button>
+                            </div>
+                        </div>
+
+                    ) : (<Link to={'/login'} className='text-lg  font-semibold bg-white px-3 py-1 rounded-lg hover:text-black hover:bg-emerald-300 transition duration-500 ease-in-out hover:cursor-pointer'>Login</Link>
+                    )}
+
+                    {isAuth ? <img onClick={(e) => setMenuOpen(!menuOpen)} src={`http://localhost:8000/uploads/${userData.image}`} className='bg-red-400 w-9 h-9 rounded-full' /> : ""}
 
                 </div>
 
             </div>
             <Outlet />
-            
+
         </>
     )
 }

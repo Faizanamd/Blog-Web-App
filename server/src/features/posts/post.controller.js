@@ -27,7 +27,7 @@ export const getAllPostController = async (req, res) => {
 
 export const getPostById = async (req, res) => {
     try {
-        const  postId  = req.params.postId;
+        const postId = req.params.postId;
         // console.log(postId);
         const result = await getPostByIdRepo(postId);
         if (!result) {
@@ -39,6 +39,7 @@ export const getPostById = async (req, res) => {
         console.log(err.message);
     }
 }
+
 
 function getDateAndTime() {
     // Get current date and time
@@ -54,7 +55,7 @@ function getDateAndTime() {
 
     // Get day, month, and year
     let day = currentDate.getDate();
-    day = day < 10 ? '0'+day : day;
+    day = day < 10 ? '0' + day : day;
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']; // Shortened month names
     const monthIndex = currentDate.getMonth();
     const year = currentDate.getFullYear();

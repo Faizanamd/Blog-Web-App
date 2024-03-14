@@ -31,16 +31,7 @@ function Home() {
         }
     };
 
-    // This useEffect will log the updated value of `posts` whenever it changes.
-    useEffect(() => {
-        console.log("Updated posts:", posts);
-    }, [posts]);
-
-    // ... rest of your component code
-    function getPostContent(contentArray, type) {
-        const contentObject = contentArray.find(item => item.type === type);
-        return contentObject ? contentObject.value : null;
-    }
+    
     return (
 
         <>
@@ -54,7 +45,7 @@ function Home() {
                             return (
                                 <div
                                     key={post._id}
-                                    className='md:w-[310px] w-full rounded-b-lg mt-4 h-fit pb-4 shadow-xl bg-emerald-100 backdrop-blur-lg opacity-95 hover:shadow-xl hover:scale-105 transition duration-500 space-y-3'
+                                    className='md:w-[310px] w-full rounded-b-lg mt-4 h-fit pb-4 shadow-xl bg-emerald-100 backdrop-blur-lg opacity-95 hover:shadow-xl hover:scale-105 transition duration-500 space-y-1'
                                 >
                                     <img className='w-full h-40 rounded-t-lg' src={`http://localhost:8000/uploads/${post.image}`} alt="" />
                                     <div className='flex w-full items-center justify-between px-2 mt-2'>
@@ -62,7 +53,7 @@ function Home() {
                                     </div>
                                     <Link to={`/post/${post._id}`}>
                                         <h1 className='limit-1-lines pl-2 pr-2 text-xl font-semibold'>
-                                            {parsedContent.find(item => item.type === 'title')?.value || 'Default Title'}
+                                            {post.title}
                                         </h1>
                                         <p className='limit-4-lines pl-2 text-md font-medium'>
                                             {parsedContent.find(item => item.type === 'paragraph')?.value || 'Default Paragraph'}

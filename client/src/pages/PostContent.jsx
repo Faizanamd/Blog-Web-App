@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useState } from 'react';
 import { AiOutlineLike } from "react-icons/ai";
 import { IoIosHeartEmpty } from "react-icons/io";
@@ -8,26 +8,30 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import SideBar from '../Components/SideBar';
 import Footer from '../Components/Footer';
+import AuthContext from '../Context/Auth.Context';
 function PostContent() {
-    const { postId } = useParams();
-    console.log("poostid", String(postId));
-    const [isLike, setIsLike] = useState(false);
-    const [postData, setPostData] = useState({});
+    const { isAuth, userId, likeList, setLikeList, isLike, setIsLike, postData, setPostData, fetchUserLikes } = useContext(AuthContext);
+    const {postId} = useParams();
+    console.log("temp", postId);
+
+
     const fetPost = async () => {
         const result = await axios.get(`http://localhost:8000/api/post/getPostById/${postId}`)
         if (!result.data.status) {
             toast.error(result.data.message);
         }
-        console.log("postdata", result.data.posts)
         setPostData(result.data.posts)
     }
+
     useEffect(() => {
         fetPost();
-        console.log(postData);
+        // fetchUserLikes();
     }, [])
+
     const handleLike = async (e) => {
         setIsLike(!isLike);
     }
+
     return (
 
         <>
@@ -43,9 +47,11 @@ function PostContent() {
                             </div>
                             <div className='flex space-x-2' onClick={(e) => handleLike(e)}>
                                 {isLike ?
-                                    <IoIosHeartEmpty size={24} /> :
-                                    <FcLike size={28} />}
-                                <span>{postData.likes}</span>
+                                    <FcLike size={34} />
+                                    :
+                                    <IoIosHeartEmpty size={24} />
+                                }
+                                <span>{likeList.length}</span>
                             </div>
                             <div className='pr-2 items-center'>views: <span>{postData.views}</span></div>
                         </div>
