@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 })
 // user related routes
 app.use("/api/user", userRouter);
-app.use("api/post", postRouter)
+app.use("/api/post", postRouter)
 app.use("/api/like", likeRouter);
 
 
