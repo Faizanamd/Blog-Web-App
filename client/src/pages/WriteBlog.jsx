@@ -47,7 +47,7 @@ function WriteBlog() {
         formData.append("title", title);
 
         try {
-            const result = await axios.post("https://blog-web-app-backend-ibh1acrfw-faizan-ahmads-projects-1250996e.vercel.app/api/post/newpost", formData, {
+            const result = await axios.post("https://blog-web-app-6k4j.onrender.com/api/post/newpost", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

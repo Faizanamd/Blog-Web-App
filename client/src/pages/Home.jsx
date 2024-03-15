@@ -23,7 +23,7 @@ function Home() {
 
     const fetPosts = async () => {
         try {
-            const result = await axios.get("https://blog-web-app-backend-ibh1acrfw-faizan-ahmads-projects-1250996e.vercel.app/api/post/getAllPost");
+            const result = await axios.get("https://blog-web-app-6k4j.onrender.com/api/post/getAllPost");
             setPosts(result.data.posts);
             console.log("res", result.data.posts[0].content.type = "title");  // Log the result.data.posts here
         } catch (error) {
@@ -47,7 +47,7 @@ function Home() {
                                     key={post._id}
                                     className='md:w-[310px] w-full rounded-b-lg mt-4 h-fit pb-4 shadow-xl bg-emerald-100 backdrop-blur-lg opacity-95 hover:shadow-xl hover:scale-105 transition duration-500 space-y-1'
                                 >
-                                    <img className='w-full h-40 rounded-t-lg' src={`https://blog-web-app-backend-nu.vercel.app/uploads/${post.image}`} alt="" />
+                                    <img className='w-full h-40 rounded-t-lg' src={`https://blog-web-app-6k4j.onrender.com/uploads/${post.image}`} alt="" />
                                     <div className='flex w-full items-center justify-between px-2 mt-2'>
                                         {/* ... (rest of your post metadata) */}
                                     </div>

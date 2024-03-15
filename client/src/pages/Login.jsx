@@ -17,7 +17,7 @@ function Login() {
         e.preventDefault();
 
         try {
-            const result = await axios.post("https://blog-web-app-backend-ibh1acrfw-faizan-ahmads-projects-1250996e.vercel.app/api/user/login", { email, password })
+            const result = await axios.post("https://blog-web-app-6k4j.onrender.com/api/user/login", { email, password })
             console.log(result.data);
             const data = result.data;
             if (data) {
