@@ -9,14 +9,17 @@ export const registerController = async (req, res) => {
         const checkExist = await checkEmailExist(req.body.email);
         if (checkExist) {
             return res.send({ "status": false, 'message': "User already exist" });
-        } const hashPassword = await bcrypt.hash(req.body.password, 10);
+        }
+        const hashPassword = await bcrypt.hash(req.body.password, 10);
         const result = await registerRepository({ ...user, password: hashPassword, image: req.file.filename, timestamp: "1263" });
         if (result) {
             return res.send({ "status": true, 'message': "Registeration successfull" })
+        }else{
+            return res.send({status:false, "message":"Something went wrong" });
         }
     } catch (error) {
         console.log("error in register controller: ", error.message);
-        return res.send({ "status": false, 'message': err.message});
+        return res.send({ "status": false, 'message': err.message });
     }
 }
 
@@ -44,7 +47,7 @@ export const loginController = async (req, res) => {
         return res.send({ "status": true, 'message': "log in successfull" });
     } catch (error) {
         console.log(error.message);
-        return res.send({ "status": false, 'message': err.message});
+        return res.send({ "status": false, 'message': err.message });
     }
 }
 
@@ -73,7 +76,7 @@ export const getUser = async (req, res) => {
         //     result: false,
         //     message: "Error getting user"
         // });
-        return res.send({ "status": false, 'message': err.message});
+        return res.send({ "status": false, 'message': err.message });
     }
 }
 
@@ -97,7 +100,7 @@ export const deleteToken = async (req, res) => {
             result: false,
             message: "Error deleting token"
         });
-        return res.send({ "status": false, 'message': err.message});
+        return res.send({ "status": false, 'message': err.message });
     }
 }
 
